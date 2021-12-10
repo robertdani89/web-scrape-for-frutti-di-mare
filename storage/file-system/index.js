@@ -1,20 +1,31 @@
-import fs from 'fs'
-import path from 'path'
+const fs = require('fs')
+const path = require('path')
 
 const dataFolder = path.resolve(__dirname, '..', "data")
+let filePath
 
-const init = () => {
+(() => {
     //Prepage folders
     if (!fs.existsSync(dataFolder)) {
         fs.mkdirSync(dataFolder)
     }
 
     const today = new Date()
-    const todayString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+    todayString = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+    const fileName = `${todayString}.csv`
+    filePath = path.resolve(dataFolder, fileName)
 
-    console.log(todayString)
+    if (!fs.existsSync(filePath)) {
+        fs.writeFileSync(filePath, "")
+    }
+})()
+
+const addData = (data) => {
+    fs.appendFileSync(filePath, data + "\n");
 }
 
-init()
+const getData = () => {
+    return fs.readFileSync(filePath, { encoding: "utf-8" });
+}
 
-module.exports = "hello"
+module.exports = { addData, getData }

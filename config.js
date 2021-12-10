@@ -1,4 +1,4 @@
-module.export =
+module.exports =
 {
     products: [
         {
@@ -9,11 +9,9 @@ module.export =
             data: [
                 {
                     name: "price",
-                    selector: "",
-                },
-                {
-                    name: "weight",
-                    selector: "",
+                    selector: "div.product-page-price-wrapper > div > div.price_row.price_row_2 > span",
+                    property: "textContent",
+                    formatFn: () => {}
                 },
             ],
         }
